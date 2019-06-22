@@ -7,13 +7,14 @@ import { HelloComponent } from './hello.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { HttpClientModule } from '@angular/common/http';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SafeHtmlPipe } from './pipes/safeHtml';
 
 @NgModule({
   imports: [BrowserModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatGridListModule, HttpClientModule, MatTabsModule, MatFormFieldModule, MatInputModule],
-  declarations: [AppComponent, HelloComponent ],
+  declarations: [AppComponent, HelloComponent, SafeHtmlPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
