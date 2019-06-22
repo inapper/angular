@@ -3,6 +3,10 @@
   background: #f0f0f0;
 }
 
+.mat-icon {
+  margin-left: 10px;
+}
+
 .mat-tab-group{
   height: 100vh !important;
   width: 100vh !important;
@@ -10,9 +14,9 @@
 .mat-tab-body-content { width: 50% !important; }
 :host ::ng-deep .mat-tab-header { width: 400px !important; }
 :host ::ng-deep .mat-tab-label { 
-  min-width: 50px !important; 
-  width: 50px !important; 
-  max-width: 50px !important; 
+  min-width: 100px !important; 
+  width: 100px !important; 
+  max-width: 100px !important; 
 }
 
 p {

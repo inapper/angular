@@ -11,9 +11,22 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SafeHtmlPipe } from './pipes/safeHtml';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  imports: [BrowserModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatGridListModule, HttpClientModule, MatTabsModule, MatFormFieldModule, MatInputModule],
+  imports: [
+    BrowserModule, 
+    BrowserAnimationsModule, 
+    FormsModule, 
+    ReactiveFormsModule, 
+    MatButtonModule, 
+    MatGridListModule, 
+    HttpClientModule, 
+    MatTabsModule, 
+    MatFormFieldModule, 
+    MatInputModule,
+    MatIconModule
+  ],
   declarations: [AppComponent, HelloComponent, SafeHtmlPipe],
   bootstrap: [AppComponent]
 })
