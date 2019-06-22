@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>InApp</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0; 
+        }
+
+        :root {
+            font-size: 16px;
+        }
+
+        html, 
+        body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, Helvetica;
+        }
+
+        .inapp {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .inapp__close {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-image: url('https://www.itau.com.br/_arquivosestaticos/Itaumail/campanhas/app_full_evolucao/educacao-financeira/emkt-01/sprite.png');
+            background-position: -25px;
+            background-repeat: no-repeat;
+            z-index: 10;
+        }
+
+        .step {
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: 25px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #ffffff;
+            color: #58595b;
+            transform: translateX(100%);
+            opacity: 0;
+            transition: 0.4s cubic-bezier(0.12, 1.1, 0.74, 0.99);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .step.is-highlighted {
+            background: #ff6400;
+            color: #FFFFFF;
+        }
+        
+        .step.is-highlighted .step__title {
+            color: #FFFFFF;
+            font-weight: 500;
+            font-size: 1.4em;
+        }
+
+        .step.is-highlighted .step__title span {
+            display: flex;
+            align-items: center;
+            padding: 5px 15px;
+            height: 50px;
+            white-space: nowrap;
+            border: 3px solid #fe8c1a;
+            border-radius: 10px;
+            line-height: 1;
+        }
+
+        .step.is-highlighted span.step__title--icon {
+            padding: 5px;
+            content: url('https://www.itau.com.br/_arquivosestaticos/Itaumail/campanhas/app_full_evolucao/educacao-financeira/emkt-01/icon-search.jpg');
+        }
+
+        .step.is-highlighted .step__title span:nth-child(1) { max-width: 290px; }
+        .step.is-highlighted .step__title span:nth-child(2) { max-width: 230px; }
+        .step.is-highlighted .step__title span:nth-child(3) { margin-left: 180px; }
+
+        .step.is-highlighted .step__title span:not(:last-child) {
+            margin-bottom: 5px;
+        }
+        
+        .step.is-exceeded {
+            transform: translateX(-100%);
+        }
+
+        .step.is-active {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .steps.is-back .step:not(.is-active) {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+
+        .steps.is-back .step.is-exceeded {
+            transform: translateX(100%);
+        }
+
+        .step__container {
+            width: 100%;
+        }
+
+        .step__title {
+            color: #ff6400;
+            font-size: 1.875em;
+            font-weight: 500;
+        }
+
+        .step__description {
+            font-size: 1.125em;
+            max-width: 300px;
+            margin: 50px 0;
+        }
+
+        .step__bullet {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            z-index: 9;
+            transform: translateX(-50%);
+            display: flex;
+        }
+
+        .step__bullet-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 100%;
+            margin: 0 5px;
+            background-color: #ff6400;
+        }
+
+        .step__bullet-dot:not(.is-active) {
+            opacity: .5;
+        }
+
+        .step__bullet.is-highlighted .step__bullet-dot {
+            background-color: #ffffff;
+        }
+
+        .step__bullet.on-top {
+            bottom: 100px;
+        }
+
+        .step__cta {
+            display: block;
+            position: absolute;
+            bottom: 15px;
+            left: 25px;
+            right: 25px;
+            background-color: #ff6400;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            padding: 25px;
+            transition: .2s;
+        }
+
+        .step__cta:hover {
+            background-color: #b64e09;
+        }
+
+        @media (max-width: 768px) and (orientation: landscape) {
+            .step__title {
+                padding-right: 30px;
+            }
+
+            .step__description-wrap {
+                display: flex;
+                flex-direction: row-reverse;
+                align-items: center;
+                padding-right: 40px;
+                margin: 20px 0 60px;
+            }
+
+            .step__description {
+                max-width: none;
+                margin: 0;
+            }
+
+            .step__description-wrap .step__description {
+                padding: 0 20px;
+            }
+        }
+    </style>
+    <meta name="ADBMessageAssets" content="
+        ['https://www.itau.com.br/_arquivosestaticos/Itaumail/campanhas/app_full_evolucao/educacao-financeira/emkt-01/sprite.png', 'sprite.png'],
+        ['https://www.itau.com.br/_arquivosestaticos/Itaumail/campanhas/app_full_evolucao/educacao-financeira/emkt-01/icon-1.jpg', 'icon-1.jpg'],
+        ['https://www.itau.com.br/_arquivosestaticos/Itaumail/campanhas/app_full_evolucao/educacao-financeira/emkt-01/icon-2.jpg', 'icon-2.jpg'],
+        ['https://www.itau.com.br/_arquivosestaticos/Itaumail/campanhas/app_full_evolucao/educacao-financeira/emkt-01/icon-search.jpg', 'icon-search.jpg']
+    "/>
+</head>
+<body>
+    <main class="inapp">
+        <a href="adbinapp://cancel" class="inapp__close"></a>
+        <section class="steps">
+            <section class="step is-highlighted is-active">
+                <div class="step__container">
+                    <h2 class="step__title">
+                        <span>Buscando melhorar sua</span>
+                        <span>vida financeira?</span>
+                        <span class="step__title--icon"></span>
+                    </h2>
+                    <p class="step__description">
+                        Conte com a gente ;) <br>
+                        Nos pr&oacute;ximos meses, o Ita&uacute; vai sempre trazer uma dica pra voc&ecirc; aqui no app. Vamos nessa?
+                    </p>
+                </div>
+            </section>
+            <section class="step">
+                <div class="step__container">
+                    <h2 class="step__title">monitore tudo que entra e sai da sua conta aqui no app.</h2>
+                    <div class="step__description-wrap">
+                        <p class="step__description">
+                            Acompanhando seus gastos e ganhos mensais na tela do extrato, voc&ecirc; identifica despesas desnecess&aacute;rias.
+                        </p>
+                        <img src="https://www.itau.com.br/_arquivosestaticos/Itaumail/campanhas/app_full_evolucao/educacao-financeira/emkt-01/icon-1.jpg" alt="" class="step_icon" width="67" height="67">
+                    </div>
+                </div>
+            </section>
+            <section class="step">
+                <div class="step__container">
+                    <h2 class="step__title">no fim do m&ecirc;s, voc&ecirc; economiza sem nem perceber.</h2>
+                    <div class="step__description-wrap">
+                        <p class="step__description">
+                            Transforme essa dica em h&aacute;bito e veja sua vida financeira sempre saud&aacute;vel ;)
+                        </p>
+                        <img src="https://www.itau.com.br/_arquivosestaticos/Itaumail/campanhas/app_full_evolucao/educacao-financeira/emkt-01/icon-2.jpg" alt="" class="step_icon" width="67" height="67">
+                    </div>
+                </div>
+                <a href="adbinapp://confirm/?url=itauvarejo://extrato" role="button" title="Acompanhar extrato" class="step__cta">Acompanhar extrato</a>
+            </section>
+        </section>
+        <span class="step__bullet is-highlighted">
+            <span class="step__bullet-dot is-active"></span>
+            <span class="step__bullet-dot"></span>
+            <span class="step__bullet-dot"></span>
+        </span>
+    </main>
+
+    <script>
+        (function(){
+            const steps = document.querySelectorAll('.step');
+            const stepWrapper = document.querySelector('.steps');
+            const stepBullet = document.querySelector('.step__bullet');
+            const stepBulletDot = document.querySelectorAll('.step__bullet-dot');
+            const eventsTouchListener = ['touchstart', 'touchend', 'mousedown', 'mouseup'];
+            let startAxis = 0;
+
+            const getActiveStepIndex = () => {
+                let activeIndex;
+                
+                steps.forEach((step, index) => {
+                    if (step.classList.contains('is-active'))
+                      activeIndex = index
+                })
+
+                return activeIndex
+            }
+
+            const isFirstStepIndex = () => getActiveStepIndex(steps) === 0
+            
+            const isLastStepIndex = () => getActiveStepIndex(steps) === (steps.length - 1)
+
+            const isNavToNext = (event) => new Promise ((resolve, reject) => {
+                switch (event.type) {
+                    case 'mousedown' :
+                        startAxis = event.x;
+                    break;
+                    case 'touchstart' :
+                        startAxis = event.changedTouches[0].clientX;
+                    break;
+                    case 'mouseup' :
+                        resolve(startAxis > event.x)
+                    break;
+                    case 'touchend' :
+                        resolve(startAxis > event.changedTouches[0].clientX)
+                    break;
+                }
+            })
+
+            const toggleBulletHighlighted = () => {
+                const activeStepIndex = getActiveStepIndex();
+                const isStepHighlighted = steps[activeStepIndex].classList.contains('is-highlighted');
+
+                stepBullet.classList.toggle('is-highlighted', isStepHighlighted)
+            }
+
+            const toggleBulletOnTop = () => {
+                stepBullet.classList.toggle('on-top', isLastStepIndex())
+            }
+
+            const setActiveStep = (navToNext, currentStepIndex, nextStepIndex) => {
+                stepWrapper.classList.toggle('is-back', !navToNext)
+                
+                steps.forEach(step => step.classList.remove('is-exceeded'))
+                
+                steps[currentStepIndex].classList.remove('is-active')
+                stepBulletDot[currentStepIndex].classList.remove('is-active')
+                
+                steps[currentStepIndex].classList.add('is-exceeded')
+
+                steps[nextStepIndex].classList.add('is-active')
+                stepBulletDot[nextStepIndex].classList.add('is-active')
+
+                toggleBulletHighlighted()
+                toggleBulletOnTop()
+            }
+
+            const stepNavTo = (navToNext) => {
+                const activeStepIndex = getActiveStepIndex();
+
+                if (isFirstStepIndex() && !navToNext)
+                    return;
+
+                if (isLastStepIndex() && navToNext)
+                    return;
+                
+                if (navToNext) {
+                    setActiveStep(navToNext, activeStepIndex, activeStepIndex + 1);
+                    return;
+                }
+                
+                if(!isLastStepIndex()){
+                    setActiveStep(navToNext, activeStepIndex, activeStepIndex - 1);
+                }
+            }
+
+            const stepNavigation = async (event) => {
+                const navToNext = await isNavToNext(event);
+                
+                stepNavTo(navToNext)
+            }
+
+            eventsTouchListener.map( event => stepWrapper.addEventListener(event, eventElement => stepNavigation(eventElement)) )
+        })();
+    </script>
+</body>
+</html>

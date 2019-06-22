@@ -1,0 +1,28 @@
+<div class="containerAll"><button mat-raised-button color="primary" (click)="render()">Primary</button>
+<div>
+<mat-form-field class="example-full-width">
+      <input matInput maxlength="2" placeholder="Postal Code" [(ngModel)]='tabsCount' min="1" max="9" (change)="tabsCountUpdate()">
+    </mat-form-field>
+</div>
+
+<mat-grid-list cols="2" rowHeight="1000px">
+	<mat-grid-tile colspan="1"       rowspan="1"
+>
+<mat-tab-group>
+  <mat-tab *ngFor="let tab of tabs; let index = index" label="Aba {{index+1}}">
+<mat-form-field class="example-full-width">
+      <input matInput maxlength="100" placeholder="Texto" [(ngModel)]='tabs[index].text' (change)="test()">
+    </mat-form-field>
+  </mat-tab>
+</mat-tab-group>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1">
+    <div class="smartphone">
+  <div class="content">
+<iframe height="100%" width="100%" id="renderHtml" name="renderHtml"></iframe>
+  </div>
+</div>
+
+  </mat-grid-tile>
+</mat-grid-list>
+</div>
