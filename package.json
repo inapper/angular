@@ -27,7 +27,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod && npx ngh --repo=https://github.com/inapper/inapper.github.io --name=velrino --email=denismagalhaesvelrino@gmail.com  --branch=master --dir=dist/demo"
+    "deploy": "ng build --prod && npm run upload",
+    "upload": "npx ngh --repo=https://github.com/inapper/inapper.github.io --name=velrino --email=denismagalhaesvelrino@gmail.com  --branch=master --dir=dist/demo"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.0",
